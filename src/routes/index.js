@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import categoryRoutes from './category.routes.js';
 import productRoutes from './product.routes.js';
+import brandRoutes from './brand.routes.js';
 
 const apiRouter = Router();
 
-// Estado de la API (Health check)
+
 apiRouter.get('/health', (req, res) => {
   res.status(200).json({
     status: 'OK',
@@ -16,5 +17,6 @@ apiRouter.get('/health', (req, res) => {
 // Enrutadores modulares
 apiRouter.use('/categories', categoryRoutes);
 apiRouter.use('/products', productRoutes);
+apiRouter.use('/brands', brandRoutes);
 
 export default apiRouter;
