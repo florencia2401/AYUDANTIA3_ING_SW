@@ -6,12 +6,16 @@ import prisma from '../config/prisma.js';
  */
 export const getAllProducts = async (req, res, next) => {
   try {
-    const { categoryId, minPrice, maxPrice, inStock } = req.query;
+    const { categoryId, brandId, minPrice, maxPrice, inStock } = req.query;
 
     const where = {};
 
     if (categoryId !== undefined) {
       where.categoryId = Number(categoryId);
+    }
+
+    if (brandId !== undefined) {
+      where.brandId = Number(brandId);
     }
 
     if (minPrice !== undefined || maxPrice !== undefined) {
@@ -33,12 +37,20 @@ export const getAllProducts = async (req, res, next) => {
             id: true,
             name: true
           }
+        },
+        brand: {
+          select: {
+            select: {
+            id: true,
+            name: true
+          }
         }
       },
       orderBy: {
         createdAt: 'desc'
       }
-    });
+    }
+  });
 
     res.status(200).json({
       total: products.length,
